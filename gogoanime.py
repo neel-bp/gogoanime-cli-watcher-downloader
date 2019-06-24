@@ -114,7 +114,10 @@ directdivs=directsoup.find('div',attrs={'class':'dowload'})
 directlinka=directdivs.find('a')
 directlink=(directlinka['href'])
 
-print(directlink)
+#print(directlink)
+#print(directlink.replace(' ',"%20"))
+
+os.system('vlc '+'\"'+directlink.replace(' ','%20')+'\"')
 
 
 
