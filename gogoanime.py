@@ -88,7 +88,7 @@ series = int(input('choose series: '))
 #print(pagetitlelinks[series])
 #print(list(pagetitlelinks.values())[series-1])
 
-episodenumber=input('enter eepisode number: ')
+episodenumber=input('enter episode number: ')
 
 #link to the series fetched using number instead of full name
 serieslink=list(pagetitlelinks.values())[series-1]
