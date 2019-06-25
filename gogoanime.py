@@ -2,11 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
-searchurl='https://www.gogoanime.tv/search.html?keyword='
-searchq = input('search: ')
-page = requests.get(searchurl+searchq)
 
-pagedata=page.text
 
 def websoup(webpagedata):   
     soup=BeautifulSoup(webpagedata,'html.parser')
@@ -37,7 +33,18 @@ def numberofpages(webpagedata):
     except:
         return None
 
-titlelinks=websoup(pagedata)
+searchurl='https://www.gogoanime.tv/search.html?keyword='
+titlelinks={}
+while True:
+    searchq = input('search: ')
+    page = requests.get(searchurl+searchq)
+    pagedata=page.text
+    titlelinks=websoup(pagedata)
+    if titlelinks == {}:
+        print('nothing found with your search query')
+    else:
+        break
+
 for titlelink in titlelinks.keys():
     print(titlelink)
 
