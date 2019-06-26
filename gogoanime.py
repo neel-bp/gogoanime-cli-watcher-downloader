@@ -50,6 +50,12 @@ def downloadsoup2(webpagedata):
     a_b_dictionary=dict(zip(a,b))
     return a_b_dictionary
 
+def clrscr():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
 
 
 searchurl='https://www.gogoanime.tv/search.html?keyword='
@@ -65,6 +71,7 @@ while True:
         break
 
 print()
+clrscr()
 for titlelink in titlelinks.keys():
     print(titlelink)
 
@@ -87,6 +94,7 @@ else:
         pageno=input('if your series is on this page enter this: ')
         
         if pageno == 'next':
+            clrscr()
             pagepos=pagepos+1
             r=requests.get(searchurl+searchq+'&page='+str(pagepos))
             pagetitlelinks=websoup(r.text)
@@ -96,6 +104,7 @@ else:
             print()
             
         elif pageno == "prev":
+            clrscr()
             pagepos=pagepos-1
             r=requests.get(searchurl+searchq+'&page='+str(pagepos))
             pagetitlelinks=websoup(r.text)
@@ -108,7 +117,7 @@ else:
             break
         
         else:
-            print('unexpected input please trry again')
+            print('unexpected input please try again')
     
     
 series = int(input('choose series: '))
