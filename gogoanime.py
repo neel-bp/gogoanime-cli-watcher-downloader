@@ -33,6 +33,25 @@ def numberofpages(webpagedata):
     except:
         return None
 
+def downloadsoup2(webpagedata):
+    directsoup=BeautifulSoup(webpagedata,'html.parser')
+    directdivs=directsoup.find_all('div',attrs={'class':'dowload'})
+    directlinksa=[]
+    for directdiv in directdivs:
+        directlinksa.append(directdiv.find('a'))
+
+    a=[]
+    b=[]
+    for x in directlinksa:
+        a.append(x.text)
+        b.append(x['href'])
+
+    
+    a_b_dictionary=dict(zip(a,b))
+    return a_b_dictionary
+
+
+
 searchurl='https://www.gogoanime.tv/search.html?keyword='
 titlelinks={}
 while True:
@@ -45,6 +64,7 @@ while True:
     else:
         break
 
+print()
 for titlelink in titlelinks.keys():
     print(titlelink)
 
@@ -113,18 +133,14 @@ downloadanime=tempsoup.find('div',attrs={'class':'download-anime'})
 downloadlinkpagea=downloadanime.find('a')
 downloadlinkpage=downloadlinkpagea['href']
 
-# fetching the direct link
+# fetching the direct links
 
 directrequest=requests.get(downloadlinkpage)
-directsoup=BeautifulSoup(directrequest.text,'html.parser')
-directdivs=directsoup.find('div',attrs={'class':'dowload'})
-directlinka=directdivs.find('a')
-directlink=(directlinka['href'])
+sourcedictionary=downloadsoup2(directrequest.text)
 
-#print(directlink)
-#print(directlink.replace(' ',"%20"))
-
-os.system('vlc '+'\"'+directlink.replace(' ','%20')+'\"')
+print()
+for sourcename in sourcedictionary.keys():
+    print(sourcename)
 
 
 
