@@ -149,7 +149,13 @@ sourcedictionary=downloadsoup2(directrequest.text)
 
 print()
 for sourcename in sourcedictionary.keys():
-    print(sourcename)
+    if '\n' in sourcename:
+        sourcename2=sourcename.replace(' ','')
+        print(sourcename2.replace('\n',''))
+    else:
+        print(sourcename)
+
+
 
 
 
