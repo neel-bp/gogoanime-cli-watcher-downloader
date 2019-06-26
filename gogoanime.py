@@ -153,5 +153,5 @@ for sourcename in sourcedictionary.keys():
         sourcename2=sourcename.replace(' ','')
         print(sourcename2.replace('\n',''))
     else:
-        print(sourcename)
+        print(sourcename.replace('Download',''))
 
