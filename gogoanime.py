@@ -181,6 +181,7 @@ for sourcename in sourcedictionary.keys():
         print(sourcename2.replace('\n',''))
     else:
         print(sourcename.replace('Download',''))
+print()
 
 sourcechoice = int(input('choose source: '))
 
