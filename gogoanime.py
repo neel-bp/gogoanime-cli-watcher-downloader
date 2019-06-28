@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+from openload import OpenLoad
+import apikey
 
 
 
@@ -55,6 +57,31 @@ def clrscr():
         os.system('cls')
     else:
         os.system('clear')
+
+
+def openloadfetch(fileid):
+    ol = OpenLoad(apikey.userkey, apikey.passkey)
+
+
+    file_id = fileid
+
+    preparation_resp = ol.prepare_download(file_id)
+    ticket = preparation_resp.get('ticket')
+
+    # Sometimes no captcha is sent in openload.co API response.
+    captcha_url = preparation_resp.get('captcha_url')
+
+    if captcha_url:
+        # Solve captcha.
+        pass
+    else:
+        captcha_response = ''
+
+    download_resp = ol.get_download_link(file_id, ticket, captcha_response)
+    direct_download_url = download_resp.get('url')
+
+    # Process download url.
+    return direct_download_url   
 
 
 
@@ -155,3 +182,11 @@ for sourcename in sourcedictionary.keys():
     else:
         print(sourcename.replace('Download',''))
 
+sourcechoice = int(input('choose source: '))
+
+if '\n' in list(sourcedictionary.keys())[sourcechoice-1]:
+    os.system('vlc \"'+list(sourcedictionary.values())[sourcechoice-1]+'\"')
+elif 'Openload' in list(sourcedictionary.keys())[sourcechoice-1]:
+    openloadlink=list(sourcedictionary.values())[sourcechoice-1]
+    openloaddirect=openloadfetch(openloadlink.split('/')[len(openloadlink.split('/'))-1])
+    os.system('vlc \"'+openloaddirect+'\"')
