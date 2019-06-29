@@ -125,20 +125,25 @@ else:
             pagepos=pagepos+1
             r=requests.get(searchurl+searchq+'&page='+str(pagepos))
             pagetitlelinks=websoup(r.text)
-            
-            for pagetitlelink in pagetitlelinks.keys():
-                print(pagetitlelink)
-            print()
+            if pagetitlelinks == {}:
+                print('this page does not exist')
+            else:
+                for pagetitlelink in pagetitlelinks.keys():
+                    print(pagetitlelink)
+                print()
             
         elif pageno == "prev":
             clrscr()
             pagepos=pagepos-1
-            r=requests.get(searchurl+searchq+'&page='+str(pagepos))
-            pagetitlelinks=websoup(r.text)
+            if pagepos==0:
+                print('this page does not exist')
+            else:
+                r=requests.get(searchurl+searchq+'&page='+str(pagepos))
+                pagetitlelinks=websoup(r.text)
             
-            for pagetitlelink in pagetitlelinks.keys():
-                print(pagetitlelink)
-            print()
+                for pagetitlelink in pagetitlelinks.keys():
+                    print(pagetitlelink)
+                print()
             
         elif pageno == "this":
             break
