@@ -121,26 +121,30 @@ else:
         pageno=input('if your series is on this page enter this: ')
         
         if pageno == 'next':
-            clrscr()
+            
             pagepos=pagepos+1
             r=requests.get(searchurl+searchq+'&page='+str(pagepos))
             pagetitlelinks=websoup(r.text)
             if pagetitlelinks == {}:
                 print('this page does not exist')
+                pagepos=pagepos-1
             else:
+                clrscr()
                 for pagetitlelink in pagetitlelinks.keys():
                     print(pagetitlelink)
                 print()
             
         elif pageno == "prev":
-            clrscr()
+            
             pagepos=pagepos-1
             if pagepos==0:
                 print('this page does not exist')
+                pagepos=1
             else:
+                
                 r=requests.get(searchurl+searchq+'&page='+str(pagepos))
                 pagetitlelinks=websoup(r.text)
-            
+                clrscr()
                 for pagetitlelink in pagetitlelinks.keys():
                     print(pagetitlelink)
                 print()
