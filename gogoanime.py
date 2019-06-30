@@ -95,7 +95,7 @@ while True:
     pagedata=page.text
     titlelinks=websoup(pagedata)
     if titlelinks == {}:
-        print('nothing found with your search query')
+        print('\u001b[31;1m'+'nothing found with your search query'+'\u001b[0m')
     else:
         break
 
@@ -117,7 +117,7 @@ else:
 
     while True:
        
-        print('|Previous-page||Next-page|')
+        print('\u001b[33;1m'+'|Previous-page||Next-page|'+'\u001b[0m')
         print()
         
         pageno=input('if your series is on this page enter this: ')
@@ -128,7 +128,7 @@ else:
             r=requests.get(searchurl+searchq+'&page='+str(pagepos))
             pagetitlelinks=websoup(r.text)
             if pagetitlelinks == {}:
-                print('this page does not exist')
+                print('\u001b[31;1m'+'this page does not exist'+'\u001b[0m')
                 pagepos=pagepos-1
             else:
                 clrscr()
@@ -141,7 +141,7 @@ else:
             
             pagepos=pagepos-1
             if pagepos==0:
-                print('this page does not exist')
+                print('\u001b[31;1m'+'this page does not exist'+'\u001b[0m')
                 pagepos=1
             else:
                 
@@ -157,7 +157,7 @@ else:
             break
         
         else:
-            print('unexpected input please try again')
+            print('\u001b[31;1m'+'unexpected input please try again'+'\u001b[0m')
     
     
 series = int(input('choose series: '))
