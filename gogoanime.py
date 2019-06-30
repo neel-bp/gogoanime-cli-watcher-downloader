@@ -160,15 +160,20 @@ else:
             print('\u001b[31;1m'+'unexpected input please try again'+'\u001b[0m')
     
     
-series = int(input('choose series: '))
-#print(pagetitlelinks[series])
-#print(list(pagetitlelinks.values())[series-1])
+while True:
+    try:
+        series = int(input('choose series: '))
+        #print(pagetitlelinks[series])
+        #print(list(pagetitlelinks.values())[series-1])
+        #link to the series fetched using number instead of full name
+        serieslink=list(pagetitlelinks.values())[series-1]
+        break
+    except:
+        print('\u001b[31;1m'+"Can't you even count?? try again"+'\u001b[0m')
 
-episodenumber=input('enter episode number: ')
 
-#link to the series fetched using number instead of full name
-serieslink=list(pagetitlelinks.values())[series-1]
 #fetching the name of the series in the format which is used in url so that it can be used in fetching the url of the episode
+episodenumber=input('enter episode number: ')
 animename=serieslink.split('/')[len(serieslink.split('/'))-1]
 
 ## getting the link to the episode of the series selected and parsing its html
