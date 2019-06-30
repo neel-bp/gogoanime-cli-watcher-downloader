@@ -172,20 +172,27 @@ while True:
         print('\u001b[31;1m'+"Can't you even count?? try again"+'\u001b[0m')
 
 
-#fetching the name of the series in the format which is used in url so that it can be used in fetching the url of the episode
-episodenumber=input('enter episode number: ')
-animename=serieslink.split('/')[len(serieslink.split('/'))-1]
+while True:
 
-## getting the link to the episode of the series selected and parsing its html
+    try:
+        #fetching the name of the series in the format which is used in url so that it can be used in fetching the url of the episode
+        episodenumber=input('enter episode number: ')
+        animename=serieslink.split('/')[len(serieslink.split('/'))-1]
 
-episoderequest=requests.get('https://gogoanime.tv/'+animename+'-episode-'+str(episodenumber))
-tempsoup=BeautifulSoup(episoderequest.text,'html.parser')
+        ## getting the link to the episode of the series selected and parsing its html
 
-# fetching link to vidstream where download link to direct video is.
+        episoderequest=requests.get('https://gogoanime.tv/'+animename+'-episode-'+str(episodenumber))
+        tempsoup=BeautifulSoup(episoderequest.text,'html.parser')
 
-downloadanime=tempsoup.find('div',attrs={'class':'download-anime'})
-downloadlinkpagea=downloadanime.find('a')
-downloadlinkpage=downloadlinkpagea['href']
+        # fetching link to vidstream where download link to direct video is.
+
+        downloadanime=tempsoup.find('div',attrs={'class':'download-anime'})
+        downloadlinkpagea=downloadanime.find('a')
+        downloadlinkpage=downloadlinkpagea['href']
+        break
+    except:
+        print('\u001b[31;1m'+'Sorry this episode does not exist'+'\u001b[0m')
+
 
 # fetching the direct links
 
