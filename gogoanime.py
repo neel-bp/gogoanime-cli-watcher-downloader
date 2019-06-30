@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import os
 from openload import OpenLoad
 import apikey
+from greeter import greeter
 
 
 
@@ -84,7 +85,8 @@ def openloadfetch(fileid):
     return direct_download_url   
 
 
-
+clrscr()
+greeter()
 searchurl='https://www.gogoanime.tv/search.html?keyword='
 titlelinks={}
 while True:
@@ -98,7 +100,7 @@ while True:
         break
 
 print()
-clrscr()
+#clrscr()
 for titlelink in titlelinks.keys():
     print(titlelink)
 
@@ -130,6 +132,7 @@ else:
                 pagepos=pagepos-1
             else:
                 clrscr()
+                greeter()
                 for pagetitlelink in pagetitlelinks.keys():
                     print(pagetitlelink)
                 print()
@@ -145,6 +148,7 @@ else:
                 r=requests.get(searchurl+searchq+'&page='+str(pagepos))
                 pagetitlelinks=websoup(r.text)
                 clrscr()
+                greeter()
                 for pagetitlelink in pagetitlelinks.keys():
                     print(pagetitlelink)
                 print()
@@ -183,7 +187,8 @@ downloadlinkpage=downloadlinkpagea['href']
 directrequest=requests.get(downloadlinkpage)
 sourcedictionary=downloadsoup2(directrequest.text)
 
-print()
+clrscr()
+greeter()
 for sourcename in sourcedictionary.keys():
     if '\n' in sourcename:
         sourcename2=sourcename.replace(' ','')
