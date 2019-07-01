@@ -101,8 +101,10 @@ while True:
 
 print()
 #clrscr()
+trig1=0
 for titlelink in titlelinks.keys():
-    print(titlelink)
+    trig1=trig1+1
+    print('\u001b[33;1m'+str(trig1)+'.'+chr(26)+' '+'\u001b[34;1m'+titlelink+'\u001b[0m')
 
 print()
 
@@ -123,7 +125,7 @@ else:
         pageno=input('if your series is on this page enter this: ')
         
         if pageno == 'next':
-            
+            trig2=0
             pagepos=pagepos+1
             r=requests.get(searchurl+searchq+'&page='+str(pagepos))
             pagetitlelinks=websoup(r.text)
@@ -134,12 +136,14 @@ else:
                 clrscr()
                 greeter()
                 for pagetitlelink in pagetitlelinks.keys():
-                    print(pagetitlelink)
+                    trig2=trig2+1
+                    print('\u001b[33;1m'+str(trig2)+'.'+chr(26)+' '+'\u001b[34;1m'+pagetitlelink+'\u001b[0m')
                 print()
             
         elif pageno == "prev":
             
             pagepos=pagepos-1
+            trig3=0
             if pagepos==0:
                 print('\u001b[31;1m'+'this page does not exist'+'\u001b[0m')
                 pagepos=1
@@ -150,7 +154,8 @@ else:
                 clrscr()
                 greeter()
                 for pagetitlelink in pagetitlelinks.keys():
-                    print(pagetitlelink)
+                    trig3=trig3+1
+                    print('\u001b[33;1m'+str(trig3)+'.'+chr(26)+' '+'\u001b[34;1m'+pagetitlelink+'\u001b[0m')
                 print()
             
         elif pageno == "this":
@@ -201,12 +206,14 @@ sourcedictionary=downloadsoup2(directrequest.text)
 
 clrscr()
 greeter()
+trig4=0
 for sourcename in sourcedictionary.keys():
+    trig4=trig4+1
     if '\n' in sourcename:
         sourcename2=sourcename.replace(' ','')
-        print(sourcename2.replace('\n',''))
+        print('\u001b[33;1m'+str(trig4)+'.'+chr(26)+' '+'\u001b[34;1m'+sourcename2.replace('\n','')+'\u001b[0m')
     else:
-        print(sourcename.replace('Download',''))
+        print('\u001b[33;1m'+str(trig4)+'.'+chr(26)+' '+'\u001b[34;1m'+sourcename.replace('Download','')+'\u001b[0m')
 print()
 
 sourcechoice = int(input('choose source: '))
