@@ -227,8 +227,10 @@ print()
 sourcechoice = int(input('choose source: '))
 
 if '\n' in list(sourcedictionary.keys())[sourcechoice-1]:
-    os.system('vlc \"'+list(sourcedictionary.values())[sourcechoice-1]+'\"')
+   playlink=list(sourcedictionary.values())[sourcechoice-1].replace(' ','%20')
+   os.system('vlc \"'+playlink+'\"')
 elif 'Openload' in list(sourcedictionary.keys())[sourcechoice-1]:
     openloadlink=list(sourcedictionary.values())[sourcechoice-1]
     openloaddirect=openloadfetch(openloadlink.split('/')[len(openloadlink.split('/'))-1])
-    os.system('vlc \"'+openloaddirect+'\"')
+    opendirectnospace=openloaddirect.replace(' ','%20')
+    os.system('vlc \"'+opendirectnospace+'\"')
