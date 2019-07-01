@@ -84,6 +84,11 @@ def openloadfetch(fileid):
     # Process download url.
     return direct_download_url   
 
+def latestepisode(link):
+    r=requests.get(link)
+    soup=BeautifulSoup(r.text,'html.parser')
+    latestepisodenumbera=soup.find('a',attrs={'class':'active'})
+    return latestepisodenumbera['ep_end']
 
 clrscr()
 greeter()
@@ -176,6 +181,9 @@ while True:
     except:
         print('\u001b[31;1m'+"Can't you even count?? try again"+'\u001b[0m')
 
+print()
+print('\u001b[33;1m'+'Latest episode in this anime is: '+'\u001b[34;1m'+latestepisode(serieslink)+'\u001b[0m')
+print()
 
 while True:
 
