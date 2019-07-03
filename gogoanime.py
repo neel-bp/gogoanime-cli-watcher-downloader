@@ -137,6 +137,8 @@ else:
             if pagetitlelinks == {}:
                 print('\u001b[31;1m'+'this page does not exist'+'\u001b[0m')
                 pagepos=pagepos-1
+                r=requests.get(searchurl+searchq+'&page='+str(pagepos))
+                pagetitlelinks=websoup(r.text)
             else:
                 clrscr()
                 greeter()
@@ -152,6 +154,8 @@ else:
             if pagepos==0:
                 print('\u001b[31;1m'+'this page does not exist'+'\u001b[0m')
                 pagepos=1
+                r=requests.get(searchurl+searchq+'&page='+str(pagepos))
+                pagetitlelinks=websoup(r.text)
             else:
                 
                 r=requests.get(searchurl+searchq+'&page='+str(pagepos))
