@@ -189,52 +189,58 @@ print()
 print('\u001b[33;1m'+'Latest episode in this anime is: '+'\u001b[34;1m'+latestepisode(serieslink)+'\u001b[0m')
 print()
 
+repeater=-1
 while True:
+    repeater=repeater+1
+    while True:
 
-    try:
-        #fetching the name of the series in the format which is used in url so that it can be used in fetching the url of the episode
-        episodenumber=input('enter episode number: ')
-        animename=serieslink.split('/')[len(serieslink.split('/'))-1]
+        try:
+            #fetching the name of the series in the format which is used in url so that it can be used in fetching the url of the episode
+            if repeater < 1:
+                episodenumber=input('enter episode number: ')
+            else:
+                episodenumber=input('enter next episode number: ')
+            animename=serieslink.split('/')[len(serieslink.split('/'))-1]
 
-        ## getting the link to the episode of the series selected and parsing its html
+            ## getting the link to the episode of the series selected and parsing its html
 
-        episoderequest=requests.get('https://gogoanime.tv/'+animename+'-episode-'+str(episodenumber))
-        tempsoup=BeautifulSoup(episoderequest.text,'html.parser')
+            episoderequest=requests.get('https://gogoanime.tv/'+animename+'-episode-'+str(episodenumber))
+            tempsoup=BeautifulSoup(episoderequest.text,'html.parser')
 
-        # fetching link to vidstream where download link to direct video is.
+            # fetching link to vidstream where download link to direct video is.
 
-        downloadanime=tempsoup.find('div',attrs={'class':'download-anime'})
-        downloadlinkpagea=downloadanime.find('a')
-        downloadlinkpage=downloadlinkpagea['href']
-        break
-    except:
-        print('\u001b[31;1m'+'Sorry this episode does not exist'+'\u001b[0m')
+            downloadanime=tempsoup.find('div',attrs={'class':'download-anime'})
+            downloadlinkpagea=downloadanime.find('a')
+            downloadlinkpage=downloadlinkpagea['href']
+            break
+        except:
+            print('\u001b[31;1m'+'Sorry this episode does not exist'+'\u001b[0m')
 
 
-# fetching the direct links
+    # fetching the direct links
 
-directrequest=requests.get(downloadlinkpage)
-sourcedictionary=downloadsoup2(directrequest.text)
+    directrequest=requests.get(downloadlinkpage)
+    sourcedictionary=downloadsoup2(directrequest.text)
 
-clrscr()
-greeter()
-trig4=0
-for sourcename in sourcedictionary.keys():
-    trig4=trig4+1
-    if '\n' in sourcename:
-        sourcename2=sourcename.replace(' ','')
-        print('\u001b[33;1m'+str(trig4)+'.'+chr(26)+' '+'\u001b[34;1m'+sourcename2.replace('\n','')+'\u001b[0m')
-    else:
-        print('\u001b[33;1m'+str(trig4)+'.'+chr(26)+' '+'\u001b[34;1m'+sourcename.replace('Download','')+'\u001b[0m')
-print()
+    clrscr()
+    greeter()
+    trig4=0
+    for sourcename in sourcedictionary.keys():
+        trig4=trig4+1
+        if '\n' in sourcename:
+            sourcename2=sourcename.replace(' ','')
+            print('\u001b[33;1m'+str(trig4)+'.'+chr(26)+' '+'\u001b[34;1m'+sourcename2.replace('\n','')+'\u001b[0m')
+        else:
+            print('\u001b[33;1m'+str(trig4)+'.'+chr(26)+' '+'\u001b[34;1m'+sourcename.replace('Download','')+'\u001b[0m')
+    print()
 
-sourcechoice = int(input('choose source: '))
+    sourcechoice = int(input('choose source: '))
 
-if '\n' in list(sourcedictionary.keys())[sourcechoice-1]:
-   playlink=list(sourcedictionary.values())[sourcechoice-1].replace(' ','%20')
-   os.system('vlc \"'+playlink+'\"')
-elif 'Openload' in list(sourcedictionary.keys())[sourcechoice-1]:
-    openloadlink=list(sourcedictionary.values())[sourcechoice-1]
-    openloaddirect=openloadfetch(openloadlink.split('/')[len(openloadlink.split('/'))-1])
-    opendirectnospace=openloaddirect.replace(' ','%20')
-    os.system('vlc \"'+opendirectnospace+'\"')
+    if '\n' in list(sourcedictionary.keys())[sourcechoice-1]:
+        playlink=list(sourcedictionary.values())[sourcechoice-1].replace(' ','%20')
+        os.system('vlc \"'+playlink+'\"')
+    elif 'Openload' in list(sourcedictionary.keys())[sourcechoice-1]:
+        openloadlink=list(sourcedictionary.values())[sourcechoice-1]
+        openloaddirect=openloadfetch(openloadlink.split('/')[len(openloadlink.split('/'))-1])
+        opendirectnospace=openloaddirect.replace(' ','%20')
+        os.system('vlc \"'+opendirectnospace+'\"')
