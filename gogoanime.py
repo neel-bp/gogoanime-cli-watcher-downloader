@@ -234,7 +234,13 @@ while True:
             print('\u001b[33;1m'+str(trig4)+'.'+chr(26)+' '+'\u001b[34;1m'+sourcename.replace('Download','')+'\u001b[0m')
     print()
 
-    sourcechoice = int(input('choose source: '))
+    while True:
+        try:
+            sourcechoice = int(input('choose source: '))
+            qqq=list(sourcedictionary.keys())[sourcechoice-1]
+            break
+        except:
+            print('\u001b[31;1m'+'Invalid Input please try again, (enter the number displayed beside the source you want to select)'+'\u001b[0m')
 
     if '\n' in list(sourcedictionary.keys())[sourcechoice-1]:
         playlink=list(sourcedictionary.values())[sourcechoice-1].replace(' ','%20')
