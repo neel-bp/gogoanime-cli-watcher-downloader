@@ -1,11 +1,16 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+import sys
 from openload import OpenLoad
 import apikey
 from greeter import greeter
+import yaml
 
-
+if getattr(sys, 'frozen', False):
+    filepath=os.path.dirname(sys.executable)
+else:
+    filepath=os.path.dirname(os.path.realpath(__file__))
 
 def websoup(webpagedata):   
     soup=BeautifulSoup(webpagedata,'html.parser')
@@ -89,6 +94,21 @@ def latestepisode(link):
     soup=BeautifulSoup(r.text,'html.parser')
     latestepisodenumbera=soup.find('a',attrs={'class':'active'})
     return latestepisodenumbera['ep_end']
+
+def bookmark(aniname, anilink):
+    if os.path.exists(filepath+"\\"+"bookmarks.yaml") == False:
+        bookmarks={}
+        indexed={}
+        bookmarks.update({aniname:anilink})
+        indexed.update({aniname:latestepisode(anilink)})
+        favs={'bookmarks':bookmarks, 'indexed':indexed}
+        yaml.safe_dump(favs, open(filepath+'\\'+'bookmarks.yaml', 'w+'))
+    elif os.path.exists(filepath+"\\"+'bookmarks.yaml'):
+        bookmarkindexed=yaml.safe_load(open(filepath+"\\"+'bookmarks.yaml'))
+        bookmarkindexed['bookmarks'][aniname]=anilink
+        bookmarkindexed['indexed'][aniname]=latestepisode(anilink)
+        yaml.safe_dump(bookmarkindexed, open(filepath+"\\"+'bookmarks.yaml', 'w+'))
+
 
 clrscr()
 greeter()
@@ -181,6 +201,7 @@ while True:
         #print(list(pagetitlelinks.values())[series-1])
         #link to the series fetched using number instead of full name
         serieslink=list(pagetitlelinks.values())[series-1]
+        seriesname=list(pagetitlelinks.keys())[series-1]
         break
     except:
         print('\u001b[31;1m'+"Can't you even count?? try again"+'\u001b[0m')
@@ -188,6 +209,12 @@ while True:
 print()
 print('\u001b[33;1m'+'Latest episode in this anime is: '+'\u001b[34;1m'+latestepisode(serieslink)+'\u001b[0m')
 print()
+bookmarkyn = input('Do you want to bookmark this series? (y or n): ')
+print()
+if bookmarkyn == 'y':
+    bookmark(seriesname, serieslink)
+else:
+    pass
 
 repeater=-1
 while True:
