@@ -7,11 +7,13 @@ import apikey
 from greeter import greeter
 import yaml
 
+# for getting the filepath of executable/.py script depending on if it is frozen or not
 if getattr(sys, 'frozen', False):
     filepath=os.path.dirname(sys.executable)
 else:
     filepath=os.path.dirname(os.path.realpath(__file__))
 
+#for fetching the series name and series link in form of dictionary
 def websoup(webpagedata):   
     soup=BeautifulSoup(webpagedata,'html.parser')
     resultuls=soup.find_all('p',attrs={'class':'name'})
@@ -32,6 +34,7 @@ def websoup(webpagedata):
 
     return title_link_dictionary
 
+#for counting how much pages are there for a search query but it only shows all the page numbers that are visible from the current page so even if there are more pages it will only show like 5 which is the limit but this function is primarily used for checking if pages exist or not for a search query
 def numberofpages(webpagedata):  
     try:
         soup=BeautifulSoup(webpagedata,'html.parser')
@@ -41,6 +44,7 @@ def numberofpages(webpagedata):
     except:
         return None
 
+#for getting the sourcelist
 def downloadsoup2(webpagedata):
     directsoup=BeautifulSoup(webpagedata,'html.parser')
     directdivs=directsoup.find_all('div',attrs={'class':'dowload'})
@@ -89,6 +93,7 @@ def openloadfetch(fileid):
     # Process download url.
     return direct_download_url   
 
+#for getting the latest current episode of a series
 def latestepisode(link):
     r=requests.get(link)
     soup=BeautifulSoup(r.text,'html.parser')
