@@ -110,9 +110,13 @@ def bookmark(aniname, anilink):
         yaml.safe_dump(favs, open(filepath+'\\'+'bookmarks.yaml', 'w+'))
     elif os.path.exists(filepath+"\\"+'bookmarks.yaml'):
         bookmarkindexed=yaml.safe_load(open(filepath+"\\"+'bookmarks.yaml'))
-        bookmarkindexed['bookmarks'][aniname]=anilink
-        bookmarkindexed['indexed'][aniname]=latestepisode(anilink)
-        yaml.safe_dump(bookmarkindexed, open(filepath+"\\"+'bookmarks.yaml', 'w+'))
+        if aniname in bookmarkindexed['bookmarks']:
+            print('\u001b[31;1m'+'this series is already bookmarked'+'\u001b[0m')
+            print()
+        else:
+            bookmarkindexed['bookmarks'][aniname]=anilink
+            bookmarkindexed['indexed'][aniname]=latestepisode(anilink)
+            yaml.safe_dump(bookmarkindexed, open(filepath+"\\"+'bookmarks.yaml', 'w+'))
 
 
 clrscr()
