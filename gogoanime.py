@@ -6,6 +6,7 @@ from openload import OpenLoad
 import apikey
 from greeter import greeter
 import yaml
+#asdasdasdasd
 
 # for getting the filepath of executable/.py script depending on if it is frozen or not
 if getattr(sys, 'frozen', False):
