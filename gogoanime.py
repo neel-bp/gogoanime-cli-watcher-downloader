@@ -244,10 +244,16 @@ while True:
             tempsoup=BeautifulSoup(episoderequest.text,'html.parser')
 
             # fetching link to vidstream where download link to direct video is.
-
-            downloadanime=tempsoup.find('div',attrs={'class':'download-anime'})
-            downloadlinkpagea=downloadanime.find('a')
-            downloadlinkpage=downloadlinkpagea['href']
+            
+            downloadanime=tempsoup.find('div',attrs={'class':'anime_video_body_cate'})
+            downloadlinkpagealist=downloadanime.find_all('a')
+            for downlaodlinkpagelistitem in downloadlinkpagealist:
+                try:
+                    span = downlaodlinkpagelistitem.find('span')
+                    if span.text == 'Download':
+                        downloadlinkpage=downlaodlinkpagelistitem['href']
+                except:
+                    pass             
             break
         except:
             print('\u001b[31;1m'+'Sorry this episode does not exist'+'\u001b[0m')
